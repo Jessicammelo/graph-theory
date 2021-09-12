@@ -1258,3 +1258,971 @@ java.lang.IllegalArgumentException
 	at org.eclipse.jdt.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:166)
 	at org.eclipse.jdt.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$1.run(SelectionListenerWithASTManager.java:151)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.jdt.core 4 4 2021-09-12 12:25:52.447
+!MESSAGE Exception occurred during compilation unit conversion:
+----------------------------------- SOURCE BEGIN -------------------------------------
+package TrabalhoParcial01;
+
+//Jéssica Maria de Melo Kohn
+public class TrabalhoParcial01 {
+
+	int matrizA[][] = { { 0, 1, 1 }, { 1, 0, 1 }, { 1, 1, 0 } };
+	boolean isNulo = true;
+	boolean isMultigrafo = false;
+	boolean isSimples = false;
+	boolean isCompleto = false;
+	boolean isRegular = false;
+	boolean isGrafoDirigido = false;
+	boolean isGrafoNaoDirigido = false;
+	int quantArestas = 0;
+	int quantEntrada = 0;
+	int quantSaida = 0;
+	int entrada[] = new int[matrizA.length];
+	int saida[] = new int[matrizA[0].length];
+
+	public void tipoDoGrafo() {
+		for (int i = 0; i < matrizA.length; i++) {
+			for (int j = 0; j < matrizA.length; j++) {
+				if (matrizA[i][j] != 0 || matrizA[j][i] != 0) {
+					isNulo = false;
+				}
+				if (matrizA[i][j] == 2 || matrizA[j][i] > 1) {
+					isMultigrafo = true;
+				} else {
+					isSimples = true;
+				}
+				if (matrizA[i][j] == matrizA[j][i]) {
+					isGrafoNaoDirigido = true;
+				} else if (matrizA[i][j] != matrizA[j][i]) {
+					isGrafoDirigido = true;
+				}
+				if (matrizA[i][j] == 1 && matrizA[j][i] == 1) {
+					isCompleto = true;
+				} else {
+					isCompleto = false;
+				}
+				if ((matrizA[i][j] == 1 && matrizA[j][i] == 0) && (matrizA[j][i] == 0 && matrizA[i][j] == 1)) {
+					isRegular = true;
+				} else {
+					isRegular = false;
+				}
+			}
+		}
+		System.out.print("a. Qual é o tipo do grafo?\n");
+		if (isGrafoDirigido) {
+			System.out.print("Dirigido,");
+		} else {
+			System.out.print("Não dirigido,");
+		}
+		if (isMultigrafo) {
+			System.out.print(" multigrafo,");
+		} else {
+			System.out.print(" um grafo simples,");
+		}
+		if (isCompleto) {
+			System.out.print(" completo,");
+		} else {
+			System.out.print(" não é completo,");
+		}
+		if (isRegular) {
+			System.out.print(" e é regular.");
+		} else {
+			System.out.print(" e não é regular.\n");
+		}
+
+	}
+
+	public void arestasDoGrafo() {
+		if (isGrafoDirigido) {
+
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				saida[i] = totalLinha;
+			}
+			System.out.print("b. Quantas arestas esse grafo possui?\n");
+			System.out.print("Conjunto de arestas saída: ");
+			for (int i = 0; i < saida.length; i++) {
+				quantSaida += saida[i];
+				System.out.print(saida[i] + ", ");
+			}
+
+			for (int j = 0; j < matrizA[0].length; j++) {
+				int totalColuna = 0;
+				for (int i = 0; i < matrizA.length; i++) {
+					totalColuna += matrizA[i][j];
+				}
+				entrada[j] = totalColuna;
+			}
+			System.out.println("");
+			System.out.print("Conjunto de arestas entrada: ");
+			for (int i = 0; i < entrada.length; i++) {
+				quantEntrada += entrada[i];
+				System.out.print(entrada[i] + ", ");
+			}
+			System.out.println("");
+			quantArestas = (quantEntrada + quantSaida) / 2;
+			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
+
+		} else if (isGrafoNaoDirigido) {
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				saida[i] = totalLinha;
+			}
+			System.out.print("b. Quantas arestas esse grafo possui?\n");
+			System.out.print("Conjunto de arestas saída: ");
+			for (int i = 0; i < saida.length; i++) {
+				quantSaida += saida[i];
+				System.out.print(saida[i] + ", ");
+			}
+			System.out.println("");
+			quantArestas = (quantSaida / 2);
+			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
+		}
+	}
+
+	public void grausDoVertice() {
+		if (isGrafoNaoDirigido) {
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				saida[i] = totalLinha;
+			}
+			System.out.print("c.Qual é o grau de cada vértice?\n");
+			System.out.print("Conjunto de arestas saída: ");
+			for (int i = 0; i < saida.length; i++) {
+				quantSaida += saida[i];
+				System.out.print(saida[i] + ", ");
+			}
+			System.out.println("");
+			quantArestas = (quantSaida / 2);
+			System.out.println("Grau de cada vértice: " + quantArestas);
+		}
+		boolean par = false;
+		if((quantArestas %2) == 0) {
+			par - true
+		}
+
+	}
+}
+
+----------------------------------- SOURCE END -------------------------------------
+!STACK 0
+java.lang.IllegalArgumentException
+	at org.eclipse.jdt.core.dom.InfixExpression.setOperator(InfixExpression.java:383)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1276)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2020)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToParenthesizedExpression(ASTConverter.java:3764)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1932)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1204)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1963)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3023)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2203)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2968)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:751)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:208)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3316)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1513)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:474)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:201)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:266)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:596)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1142)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:173)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:94)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:740)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:806)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1319)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:131)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.access$0(JavaReconcilingStrategy.java:113)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:93)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:90)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:157)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:76)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:210)
+
+!ENTRY org.eclipse.jdt.ui 4 2 2021-09-12 12:25:52.449
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.jdt.ui".
+!STACK 0
+java.lang.IllegalArgumentException
+	at org.eclipse.jdt.core.dom.InfixExpression.setOperator(InfixExpression.java:383)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1276)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2020)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToParenthesizedExpression(ASTConverter.java:3764)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1932)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1204)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1963)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3023)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2203)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2968)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:751)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:208)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3316)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1513)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:474)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:201)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:266)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:596)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1142)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:173)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:94)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:740)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:806)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1319)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:131)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.access$0(JavaReconcilingStrategy.java:113)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:93)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:90)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:157)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:76)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:210)
+
+!ENTRY org.eclipse.jdt.ui 4 0 2021-09-12 12:25:52.449
+!MESSAGE Error in JDT Core during reconcile
+!STACK 0
+java.lang.IllegalArgumentException
+	at org.eclipse.jdt.core.dom.InfixExpression.setOperator(InfixExpression.java:383)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1276)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2020)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToParenthesizedExpression(ASTConverter.java:3764)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1932)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1204)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1963)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3023)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2203)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2968)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:751)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:208)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3316)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1513)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:474)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:201)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:266)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:596)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1142)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:173)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:94)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:740)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:806)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1319)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:131)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.access$0(JavaReconcilingStrategy.java:113)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:93)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:90)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:157)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:76)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:210)
+!SESSION 2021-09-12 15:16:13.887 -----------------------------------------------
+eclipse.buildId=4.19.0.I20210303-1800
+java.version=15.0.2
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2021-09-12 15:16:22.734
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2021-09-12 15:16:22.734
+!MESSAGE A conflict occurred for CTRL+SHIFT+T:
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@46188a89,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6f65a203,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2021-09-12 15:16:29.618
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\jessica.kohn'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.jdt.core 4 4 2021-09-12 15:54:44.445
+!MESSAGE Exception occurred during compilation unit conversion:
+----------------------------------- SOURCE BEGIN -------------------------------------
+package TrabalhoParcial01;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+//Jéssica Maria de Melo Kohn
+public class TrabalhoParcial01 {
+
+	int matrizA[][] = { { 0, 1, 1 }, { 1, 0, 1 }, { 1, 1, 0 } };
+	boolean isNulo = true;
+	boolean isMultigrafo = false;
+	boolean isSimples = false;
+	boolean isCompleto = false;
+	boolean isRegular = false;
+	boolean isGrafoDirigido = false;
+	boolean isGrafoNaoDirigido = false;
+	int quantArestas = 0;
+	int quantEntrada = 0;
+	int quantSaida = 0;
+	int entrada[] = new int[matrizA.length];
+	int saida[] = new int[matrizA[0].length];
+
+	public void tipoDoGrafo() {
+		for (int i = 0; i < matrizA.length; i++) {
+			for (int j = 0; j < matrizA.length; j++) {
+				if (matrizA[i][j] != 0 || matrizA[j][i] != 0) {
+					isNulo = false;
+				}
+				if (matrizA[i][j] == 2 || matrizA[j][i] > 1) {
+					isMultigrafo = true;
+				} else {
+					isSimples = true;
+				}
+				if (matrizA[i][j] == matrizA[j][i]) {
+					isGrafoNaoDirigido = true;
+				} else if (matrizA[i][j] != matrizA[j][i]) {
+					isGrafoDirigido = true;
+				}
+				if (matrizA[i][j] == 1 && matrizA[j][i] == 1) {
+					isCompleto = true;
+				} else {
+					isCompleto = false;
+				}
+				if ((matrizA[i][j] == 1 && matrizA[j][i] == 0) && (matrizA[j][i] == 0 && matrizA[i][j] == 1)) {
+					isRegular = true;
+				} else {
+					isRegular = false;
+				}
+			}
+		}
+		System.out.print("a. Qual é o tipo do grafo?\n");
+		if (isGrafoDirigido) {
+			System.out.print("Dirigido,");
+		} else {
+			System.out.print("Não dirigido,");
+		}
+		if (isMultigrafo) {
+			System.out.print(" multigrafo,");
+		} else {
+			System.out.print(" um grafo simples,");
+		}
+		if (isCompleto) {
+			System.out.print(" completo,");
+		} else {
+			System.out.print(" não é completo,");
+		}
+		if (isRegular) {
+			System.out.print(" e é regular.");
+		} else {
+			System.out.print(" e não é regular.\n");
+		}
+
+	}
+
+	public void arestasDoGrafo() {
+		if (isGrafoDirigido) {
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				saida[i] = totalLinha;
+			}
+			System.out.println("");
+			System.out.print("b. Quantas arestas esse grafo possui?\n");
+			System.out.print("Conjunto de arestas saída: ");
+			for (int i = 0; i < saida.length; i++) {
+				quantSaida += saida[i];
+				System.out.print(saida[i] + ", ");
+			}
+
+			for (int j = 0; j < matrizA[0].length; j++) {
+				int totalColuna = 0;
+				for (int i = 0; i < matrizA.length; i++) {
+					totalColuna += matrizA[i][j];
+				}
+				entrada[j] = totalColuna;
+			}
+			System.out.println("");
+			System.out.print("Conjunto de arestas entrada: ");
+			for (int i = 0; i < entrada.length; i++) {
+				quantEntrada += entrada[i];
+				System.out.print(entrada[i] + ", ");
+			}
+			System.out.println("");
+			quantArestas = (quantEntrada + quantSaida) / 2;
+			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
+
+		} else if (isGrafoNaoDirigido) {
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				saida[i] = totalLinha;
+			}
+			System.out.println("");
+			System.out.print("b. Quantas arestas esse grafo possui?\n");
+			System.out.print("Conjunto de arestas saída: ");
+			for (int i = 0; i < saida.length; i++) {
+				quantSaida += saida[i];
+				System.out.print(saida[i] + ", ");
+			}
+			System.out.println("");
+			quantArestas = (quantSaida / 2);
+			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
+		}
+	}
+
+	boolean par = false;
+
+	int grauVertice = 0;
+	public void grausDoVertice() {
+		System.out.println("c.Qual é o grau de cada vértice?\n");
+		if (isGrafoNaoDirigido) {
+			ArrayList<Integer> nDireigido = new ArrayList<>();
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				nDireigido.add(totalLinha);
+				System.out.print("V" + (i + 1) + ": " + totalLinha + ", ");
+			}
+			Collections.sort(nDireigido, Collections.reverseOrder());
+			for(int i = 0; i < nDireigido.size(); i++) {
+				(nDireigido.get(i) +  ",");
+			}
+//			System.out.print("Seguência de graus: ");
+//			for (int i = 0; i < saida.length; i++) {
+//				quantSaida += saida[i];
+//				grauVertice = saida[i];
+//				System.out.print(saida[i] + ", ");
+//			}
+//			System.out.println("");
+//			System.out.println("A" + grauVertice);
+//			quantArestas = (quantSaida / 2);
+//			if ((quantArestas % 2) == 0) {
+//				par = true;
+//				System.out.println("Somatório da seguência de graus: " + quantArestas);
+//			} else {
+//				par = false;
+//				System.out.println("Somatório da seguência de graus: " + quantArestas);
+//			}
+		} else if (isGrafoDirigido) {
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				saida[i] = totalLinha;
+			}
+			System.out.println("");
+			System.out.print("c.Qual é o grau de cada vértice?\n");
+			System.out.print("Seguência de graus saída: ");
+			for (int i = 0; i < saida.length; i++) {
+				quantSaida += saida[i];
+				System.out.print(saida[i] + ", ");
+			}
+
+			for (int j = 0; j < matrizA[0].length; j++) {
+				int totalColuna = 0;
+				for (int i = 0; i < matrizA.length; i++) {
+					totalColuna += matrizA[i][j];
+				}
+				entrada[j] = totalColuna;
+			}
+			System.out.println("");
+			System.out.print("Seguência de graus entrada: ");
+			for (int i = 0; i < entrada.length; i++) {
+				quantEntrada += entrada[i];
+				System.out.print(entrada[i] + ", ");
+			}
+			System.out.println("");
+			quantArestas = (quantEntrada + quantSaida) / 2;
+			System.out.println("Somatório da seguência de graus: " + quantArestas);
+
+		}
+
+	}
+}
+
+----------------------------------- SOURCE END -------------------------------------
+!STACK 0
+java.lang.IllegalArgumentException
+	at org.eclipse.jdt.core.dom.InfixExpression.setOperator(InfixExpression.java:383)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1276)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2020)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToParenthesizedExpression(ASTConverter.java:3764)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1932)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1204)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1963)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3023)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2193)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2965)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2203)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2968)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:751)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:208)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3316)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1513)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:474)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:201)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:266)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:596)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1142)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:173)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:94)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:740)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:806)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1319)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:131)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.access$0(JavaReconcilingStrategy.java:113)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:93)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:90)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:157)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:76)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:210)
+
+!ENTRY org.eclipse.jdt.ui 4 2 2021-09-12 15:54:44.449
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.jdt.ui".
+!STACK 0
+java.lang.IllegalArgumentException
+	at org.eclipse.jdt.core.dom.InfixExpression.setOperator(InfixExpression.java:383)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1276)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2020)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToParenthesizedExpression(ASTConverter.java:3764)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1932)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1204)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1963)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3023)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2193)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2965)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2203)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2968)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:751)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:208)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3316)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1513)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:474)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:201)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:266)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:596)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1142)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:173)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:94)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:740)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:806)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1319)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:131)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.access$0(JavaReconcilingStrategy.java:113)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:93)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:90)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:157)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:76)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:210)
+
+!ENTRY org.eclipse.jdt.ui 4 0 2021-09-12 15:54:44.452
+!MESSAGE Error in JDT Core during reconcile
+!STACK 0
+java.lang.IllegalArgumentException
+	at org.eclipse.jdt.core.dom.InfixExpression.setOperator(InfixExpression.java:383)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1276)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2020)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToParenthesizedExpression(ASTConverter.java:3764)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1932)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1204)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1963)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3023)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2193)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2965)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2203)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2968)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:751)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:208)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3316)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1513)
+	at org.eclipse.jdt.core.dom.AST.convertCompilationUnit(AST.java:474)
+	at org.eclipse.jdt.internal.core.CompilationUnit.buildStructure(CompilationUnit.java:201)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:266)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:596)
+	at org.eclipse.jdt.internal.core.CompilationUnit.makeConsistent(CompilationUnit.java:1142)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:173)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:94)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:740)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:806)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1319)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:131)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.access$0(JavaReconcilingStrategy.java:113)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:93)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:90)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:157)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:94)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.reconcile(JavaCompositeReconcilingStrategy.java:107)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:76)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:210)
+
+!ENTRY org.eclipse.jdt.core 4 4 2021-09-12 15:54:44.485
+!MESSAGE Exception occurred during compilation unit conversion:
+----------------------------------- SOURCE BEGIN -------------------------------------
+package TrabalhoParcial01;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+//Jéssica Maria de Melo Kohn
+public class TrabalhoParcial01 {
+
+	int matrizA[][] = { { 0, 1, 1 }, { 1, 0, 1 }, { 1, 1, 0 } };
+	boolean isNulo = true;
+	boolean isMultigrafo = false;
+	boolean isSimples = false;
+	boolean isCompleto = false;
+	boolean isRegular = false;
+	boolean isGrafoDirigido = false;
+	boolean isGrafoNaoDirigido = false;
+	int quantArestas = 0;
+	int quantEntrada = 0;
+	int quantSaida = 0;
+	int entrada[] = new int[matrizA.length];
+	int saida[] = new int[matrizA[0].length];
+
+	public void tipoDoGrafo() {
+		for (int i = 0; i < matrizA.length; i++) {
+			for (int j = 0; j < matrizA.length; j++) {
+				if (matrizA[i][j] != 0 || matrizA[j][i] != 0) {
+					isNulo = false;
+				}
+				if (matrizA[i][j] == 2 || matrizA[j][i] > 1) {
+					isMultigrafo = true;
+				} else {
+					isSimples = true;
+				}
+				if (matrizA[i][j] == matrizA[j][i]) {
+					isGrafoNaoDirigido = true;
+				} else if (matrizA[i][j] != matrizA[j][i]) {
+					isGrafoDirigido = true;
+				}
+				if (matrizA[i][j] == 1 && matrizA[j][i] == 1) {
+					isCompleto = true;
+				} else {
+					isCompleto = false;
+				}
+				if ((matrizA[i][j] == 1 && matrizA[j][i] == 0) && (matrizA[j][i] == 0 && matrizA[i][j] == 1)) {
+					isRegular = true;
+				} else {
+					isRegular = false;
+				}
+			}
+		}
+		System.out.print("a. Qual é o tipo do grafo?\n");
+		if (isGrafoDirigido) {
+			System.out.print("Dirigido,");
+		} else {
+			System.out.print("Não dirigido,");
+		}
+		if (isMultigrafo) {
+			System.out.print(" multigrafo,");
+		} else {
+			System.out.print(" um grafo simples,");
+		}
+		if (isCompleto) {
+			System.out.print(" completo,");
+		} else {
+			System.out.print(" não é completo,");
+		}
+		if (isRegular) {
+			System.out.print(" e é regular.");
+		} else {
+			System.out.print(" e não é regular.\n");
+		}
+
+	}
+
+	public void arestasDoGrafo() {
+		if (isGrafoDirigido) {
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				saida[i] = totalLinha;
+			}
+			System.out.println("");
+			System.out.print("b. Quantas arestas esse grafo possui?\n");
+			System.out.print("Conjunto de arestas saída: ");
+			for (int i = 0; i < saida.length; i++) {
+				quantSaida += saida[i];
+				System.out.print(saida[i] + ", ");
+			}
+
+			for (int j = 0; j < matrizA[0].length; j++) {
+				int totalColuna = 0;
+				for (int i = 0; i < matrizA.length; i++) {
+					totalColuna += matrizA[i][j];
+				}
+				entrada[j] = totalColuna;
+			}
+			System.out.println("");
+			System.out.print("Conjunto de arestas entrada: ");
+			for (int i = 0; i < entrada.length; i++) {
+				quantEntrada += entrada[i];
+				System.out.print(entrada[i] + ", ");
+			}
+			System.out.println("");
+			quantArestas = (quantEntrada + quantSaida) / 2;
+			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
+
+		} else if (isGrafoNaoDirigido) {
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				saida[i] = totalLinha;
+			}
+			System.out.println("");
+			System.out.print("b. Quantas arestas esse grafo possui?\n");
+			System.out.print("Conjunto de arestas saída: ");
+			for (int i = 0; i < saida.length; i++) {
+				quantSaida += saida[i];
+				System.out.print(saida[i] + ", ");
+			}
+			System.out.println("");
+			quantArestas = (quantSaida / 2);
+			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
+		}
+	}
+
+	boolean par = false;
+
+	int grauVertice = 0;
+	public void grausDoVertice() {
+		System.out.println("c.Qual é o grau de cada vértice?\n");
+		if (isGrafoNaoDirigido) {
+			ArrayList<Integer> nDireigido = new ArrayList<>();
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				nDireigido.add(totalLinha);
+				System.out.print("V" + (i + 1) + ": " + totalLinha + ", ");
+			}
+			Collections.sort(nDireigido, Collections.reverseOrder());
+			for(int i = 0; i < nDireigido.size(); i++) {
+				(nDireigido.get(i) +  ",");
+			}
+//			System.out.print("Seguência de graus: ");
+//			for (int i = 0; i < saida.length; i++) {
+//				quantSaida += saida[i];
+//				grauVertice = saida[i];
+//				System.out.print(saida[i] + ", ");
+//			}
+//			System.out.println("");
+//			System.out.println("A" + grauVertice);
+//			quantArestas = (quantSaida / 2);
+//			if ((quantArestas % 2) == 0) {
+//				par = true;
+//				System.out.println("Somatório da seguência de graus: " + quantArestas);
+//			} else {
+//				par = false;
+//				System.out.println("Somatório da seguência de graus: " + quantArestas);
+//			}
+		} else if (isGrafoDirigido) {
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				saida[i] = totalLinha;
+			}
+			System.out.println("");
+			System.out.print("c.Qual é o grau de cada vértice?\n");
+			System.out.print("Seguência de graus saída: ");
+			for (int i = 0; i < saida.length; i++) {
+				quantSaida += saida[i];
+				System.out.print(saida[i] + ", ");
+			}
+
+			for (int j = 0; j < matrizA[0].length; j++) {
+				int totalColuna = 0;
+				for (int i = 0; i < matrizA.length; i++) {
+					totalColuna += matrizA[i][j];
+				}
+				entrada[j] = totalColuna;
+			}
+			System.out.println("");
+			System.out.print("Seguência de graus entrada: ");
+			for (int i = 0; i < entrada.length; i++) {
+				quantEntrada += entrada[i];
+				System.out.print(entrada[i] + ", ");
+			}
+			System.out.println("");
+			quantArestas = (quantEntrada + quantSaida) / 2;
+			System.out.println("Somatório da seguência de graus: " + quantArestas);
+
+		}
+
+	}
+}
+
+----------------------------------- SOURCE END -------------------------------------
+!STACK 0
+java.lang.IllegalArgumentException
+	at org.eclipse.jdt.core.dom.InfixExpression.setOperator(InfixExpression.java:383)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1276)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2020)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToParenthesizedExpression(ASTConverter.java:3764)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1932)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1204)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1963)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3023)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2193)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2965)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2203)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2968)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:751)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:208)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3316)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1513)
+	at org.eclipse.jdt.core.dom.CompilationUnitResolver.convert(CompilationUnitResolver.java:323)
+	at org.eclipse.jdt.core.dom.ASTParser.internalCreateAST(ASTParser.java:1231)
+	at org.eclipse.jdt.core.dom.ASTParser.createAST(ASTParser.java:820)
+	at org.eclipse.jdt.core.manipulation.CoreASTProvider$1.run(CoreASTProvider.java:272)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.core.manipulation.CoreASTProvider.createAST(CoreASTProvider.java:264)
+	at org.eclipse.jdt.core.manipulation.CoreASTProvider.getAST(CoreASTProvider.java:197)
+	at org.eclipse.jdt.core.manipulation.SharedASTProviderCore.getAST(SharedASTProviderCore.java:138)
+	at org.eclipse.jdt.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:166)
+	at org.eclipse.jdt.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$1.run(SelectionListenerWithASTManager.java:151)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.jdt.core.manipulation 4 2 2021-09-12 15:54:44.487
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.jdt.core.manipulation".
+!STACK 0
+java.lang.IllegalArgumentException
+	at org.eclipse.jdt.core.dom.InfixExpression.setOperator(InfixExpression.java:383)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1276)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2020)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToParenthesizedExpression(ASTConverter.java:3764)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1932)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1204)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1963)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3023)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2193)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2965)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2203)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2968)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:751)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:208)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3316)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1513)
+	at org.eclipse.jdt.core.dom.CompilationUnitResolver.convert(CompilationUnitResolver.java:323)
+	at org.eclipse.jdt.core.dom.ASTParser.internalCreateAST(ASTParser.java:1231)
+	at org.eclipse.jdt.core.dom.ASTParser.createAST(ASTParser.java:820)
+	at org.eclipse.jdt.core.manipulation.CoreASTProvider$1.run(CoreASTProvider.java:272)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.core.manipulation.CoreASTProvider.createAST(CoreASTProvider.java:264)
+	at org.eclipse.jdt.core.manipulation.CoreASTProvider.getAST(CoreASTProvider.java:197)
+	at org.eclipse.jdt.core.manipulation.SharedASTProviderCore.getAST(SharedASTProviderCore.java:138)
+	at org.eclipse.jdt.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:166)
+	at org.eclipse.jdt.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$1.run(SelectionListenerWithASTManager.java:151)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.jdt.core.manipulation 4 0 2021-09-12 15:54:44.489
+!MESSAGE Error in JDT Core during AST creation
+!STACK 0
+java.lang.IllegalArgumentException
+	at org.eclipse.jdt.core.dom.InfixExpression.setOperator(InfixExpression.java:383)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1276)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2020)
+	at org.eclipse.jdt.core.dom.ASTConverter.convertToParenthesizedExpression(ASTConverter.java:3764)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1932)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1204)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1963)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3023)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2193)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2965)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1372)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2944)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2203)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:2968)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:751)
+	at org.eclipse.jdt.core.dom.ASTConverter.buildBodyDeclarations(ASTConverter.java:208)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:3316)
+	at org.eclipse.jdt.core.dom.ASTConverter.convert(ASTConverter.java:1513)
+	at org.eclipse.jdt.core.dom.CompilationUnitResolver.convert(CompilationUnitResolver.java:323)
+	at org.eclipse.jdt.core.dom.ASTParser.internalCreateAST(ASTParser.java:1231)
+	at org.eclipse.jdt.core.dom.ASTParser.createAST(ASTParser.java:820)
+	at org.eclipse.jdt.core.manipulation.CoreASTProvider$1.run(CoreASTProvider.java:272)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.jdt.core.manipulation.CoreASTProvider.createAST(CoreASTProvider.java:264)
+	at org.eclipse.jdt.core.manipulation.CoreASTProvider.getAST(CoreASTProvider.java:197)
+	at org.eclipse.jdt.core.manipulation.SharedASTProviderCore.getAST(SharedASTProviderCore.java:138)
+	at org.eclipse.jdt.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup.calculateASTandInform(SelectionListenerWithASTManager.java:166)
+	at org.eclipse.jdt.internal.ui.viewsupport.SelectionListenerWithASTManager$PartListenerGroup$1.run(SelectionListenerWithASTManager.java:151)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)

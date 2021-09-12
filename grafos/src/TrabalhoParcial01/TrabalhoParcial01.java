@@ -1,8 +1,12 @@
 package TrabalhoParcial01;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+//Jéssica Maria de Melo Kohn
 public class TrabalhoParcial01 {
 
-	int matrizA[][] = { { 0, 0, 1 }, { 1, 0, 1 }, { 0, 0, 0 } };
+	int matrizA[][] = { { 0, 0, 1 }, { 1, 0, 0 }, { 0, 1, 0 } };
 	boolean isNulo = true;
 	boolean isMultigrafo = false;
 	boolean isSimples = false;
@@ -10,6 +14,11 @@ public class TrabalhoParcial01 {
 	boolean isRegular = false;
 	boolean isGrafoDirigido = false;
 	boolean isGrafoNaoDirigido = false;
+	int quantArestas = 0;
+	int quantEntrada = 0;
+	int quantSaida = 0;
+	int entrada[] = new int[matrizA.length];
+	int saida[] = new int[matrizA[0].length];
 
 	public void tipoDoGrafo() {
 		for (int i = 0; i < matrizA.length; i++) {
@@ -27,7 +36,7 @@ public class TrabalhoParcial01 {
 				} else if (matrizA[i][j] != matrizA[j][i]) {
 					isGrafoDirigido = true;
 				}
-				if (matrizA[i][j] == 1 && matrizA[j][i] == 0) {
+				if (matrizA[i][j] == 1 && matrizA[j][i] == 1) {
 					isCompleto = true;
 				} else {
 					isCompleto = false;
@@ -64,15 +73,7 @@ public class TrabalhoParcial01 {
 	}
 
 	public void arestasDoGrafo() {
-		int quantArestas = 0;
-		int quantEntrada = 0;
-		int quantSaida = 0;
-		int entrada[] = new int[matrizA.length];
-
-		int saida[] = new int[matrizA[0].length];
-
-		if (isGrafoDirigido) {
-
+		if (!isGrafoDirigido) {
 			for (int i = 0; i < matrizA.length; i++) {
 				int linha[] = matrizA[i];
 				int totalLinha = 0;
@@ -81,6 +82,7 @@ public class TrabalhoParcial01 {
 				}
 				saida[i] = totalLinha;
 			}
+			System.out.println("");
 			System.out.print("b. Quantas arestas esse grafo possui?\n");
 			System.out.print("Conjunto de arestas saída: ");
 			for (int i = 0; i < saida.length; i++) {
@@ -102,9 +104,9 @@ public class TrabalhoParcial01 {
 				System.out.print(entrada[i] + ", ");
 			}
 			System.out.println("");
-			quantArestas = (quantEntrada + quantSaida) /2;
+			quantArestas = (quantEntrada + quantSaida) / 2;
 			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
-			
+
 		} else if (isGrafoNaoDirigido) {
 			for (int i = 0; i < matrizA.length; i++) {
 				int linha[] = matrizA[i];
@@ -114,6 +116,7 @@ public class TrabalhoParcial01 {
 				}
 				saida[i] = totalLinha;
 			}
+			System.out.println("");
 			System.out.print("b. Quantas arestas esse grafo possui?\n");
 			System.out.print("Conjunto de arestas saída: ");
 			for (int i = 0; i < saida.length; i++) {
@@ -121,8 +124,50 @@ public class TrabalhoParcial01 {
 				System.out.print(saida[i] + ", ");
 			}
 			System.out.println("");
-			quantArestas = (quantSaida /2);
+			quantArestas = (quantSaida / 2);
 			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
 		}
+	}
+
+	boolean par = false;
+
+	int grauVertice = 0;
+	public void grausDoVertice() {
+		System.out.println("");
+		System.out.println("c. Qual é o grau de cada vértice?");
+		if (!isGrafoDirigido) {
+			ArrayList<Integer> nDireigido = new ArrayList<>();
+			for (int i = 0; i < matrizA.length; i++) {
+				int linha[] = matrizA[i];
+				int totalLinha = 0;
+				for (int j = 0; j < linha.length; j++) {
+					totalLinha += linha[j];
+				}
+				nDireigido.add(totalLinha);
+				System.out.print("V" + (i + 1) + ": " + totalLinha + ", ");
+			}
+			Collections.sort(nDireigido, Collections.reverseOrder());
+			System.out.println();
+			for(int i = 0; i < nDireigido.size(); i++) {
+				System.out.print(nDireigido.get(i) +  ",");
+			}
+		} else if (isGrafoDirigido) {
+			for (int i = 0; i < matrizA.length; i++) {
+				int saida = 0;
+				for(int j = 0; j < matrizA[i].length; j++) {
+					saida += matrizA[i][j];
+				}
+				System.out.print("saida " + (i + 1) + ": " + saida + ", ");
+			}
+			System.out.println();
+			for (int j = 0; j < matrizA[0].length; j++) {
+				int totalColuna = 0;
+				for (int i = 0; i < matrizA.length; i++) {
+					totalColuna += matrizA[i][j];
+				}
+				System.out.print("entrada " + (j + 1) + ": " + totalColuna + ", ");
+			}
+		}
+
 	}
 }

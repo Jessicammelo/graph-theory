@@ -8,6 +8,7 @@ public class TrabalhoParcial01Main {
 		TrabalhoParcial01 parcial01 = new TrabalhoParcial01();
 		parcial01.tipoDoGrafo();
 		parcial01.arestasDoGrafo();
+		parcial01.grausDoVertice();
 	}
 
 }
