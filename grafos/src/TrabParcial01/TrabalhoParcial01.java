@@ -1,12 +1,9 @@
-package TrabalhoParcial01;
+package TrabParcial01;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-//Jéssica Maria de Melo Kohn
 public class TrabalhoParcial01 {
-
-	int matrizA[][] = { { 0, 1, 1 }, { 1, 0, 1 }, {1 , 1, 0 } };
 	boolean isNulo = true;
 	boolean isMultigrafo = false;
 	boolean isSimples = false;
@@ -17,10 +14,8 @@ public class TrabalhoParcial01 {
 	int quantArestas = 0;
 	int quantEntrada = 0;
 	int quantSaida = 0;
-	int entrada[] = new int[matrizA.length];
-	int saida[] = new int[matrizA[0].length];
 
-	public void tipoDoGrafo() {
+	public String tipoDoGrafo(int[][] matrizA) {
 		for (int i = 0; i < matrizA.length; i++) {
 			for (int j = 0; j < matrizA.length; j++) {
 				if (matrizA[i][j] != 0 || matrizA[j][i] != 0) {
@@ -48,31 +43,36 @@ public class TrabalhoParcial01 {
 				}
 			}
 		}
-		System.out.print("a. Qual é o tipo do grafo?\n");
+
+		String retorno = "";
 		if (isGrafoDirigido) {
-			System.out.print("Dirigido,");
+			retorno += "Dirigido,";
 		} else {
-			System.out.print("Não dirigido,");
+			retorno += "Não dirigido,";
 		}
 		if (isMultigrafo) {
-			System.out.print(" multigrafo,");
+			retorno += " multigrafo,";
 		} else {
-			System.out.print(" um grafo simples,");
+			retorno += " um grafo simples,";
 		}
 		if (isCompleto) {
-			System.out.print(" completo,");
+			retorno += " completo,";
 		} else {
-			System.out.print(" não é completo,");
+			retorno += " não é completo,";
 		}
 		if (isRegular) {
-			System.out.print(" e é regular.");
+			retorno += " e é regular.";
 		} else {
-			System.out.print(" e não é regular.\n");
+			retorno += " e não é regular.\n";
 		}
-
+		return retorno;
 	}
 
-	public void arestasDoGrafo() {
+	public String arestasDoGrafo(int[][] matrizA) {
+		int entrada[] = new int[matrizA.length];
+		int saida[] = new int[matrizA[0].length];
+		String saidaStr = "";
+		String entradaStr = "";
 		if (isGrafoDirigido) {
 			for (int i = 0; i < matrizA.length; i++) {
 				int linha[] = matrizA[i];
@@ -82,12 +82,9 @@ public class TrabalhoParcial01 {
 				}
 				saida[i] = totalLinha;
 			}
-			System.out.println("");
-			System.out.print("b. Quantas arestas esse grafo possui?\n");
-			System.out.print("Conjunto de arestas saída: ");
 			for (int i = 0; i < saida.length; i++) {
 				quantSaida += saida[i];
-				System.out.print(saida[i] + ", ");
+				saidaStr += saida[i] + ", ";
 			}
 
 			for (int j = 0; j < matrizA[0].length; j++) {
@@ -97,16 +94,13 @@ public class TrabalhoParcial01 {
 				}
 				entrada[j] = totalColuna;
 			}
-			System.out.println("");
-			System.out.print("Conjunto de arestas entrada: ");
 			for (int i = 0; i < entrada.length; i++) {
 				quantEntrada += entrada[i];
-				System.out.print(entrada[i] + ", ");
+				entradaStr += entrada[i] + ", ";
 			}
-			System.out.println("");
 			quantArestas = (quantEntrada + quantSaida) / 2;
-			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
 
+			return "Lista do conjunto de arestas:" + "\n" + "Saída: "+ saidaStr + "\n" + "Entrada: "+ entradaStr + "\n" + "Quantidade de arestas do grafo: " + quantArestas + "\n";
 		} else if (!isGrafoDirigido) {
 			for (int i = 0; i < matrizA.length; i++) {
 				int linha[] = matrizA[i];
@@ -116,22 +110,22 @@ public class TrabalhoParcial01 {
 				}
 				saida[i] = totalLinha;
 			}
-			System.out.println("");
-			System.out.print("b. Quantas arestas esse grafo possui?\n");
-			System.out.print("Conjunto de arestas saída: ");
+
 			for (int i = 0; i < saida.length; i++) {
 				quantSaida += saida[i];
-				System.out.print(saida[i] + ", ");
+				saidaStr += saida[i] + ", ";
 			}
-			System.out.println("");
 			quantArestas = (quantSaida / 2);
-			System.out.println("Quantidade de arestas do grafo: " + quantArestas);
+			return "Lista do conjunto de arestas: " + saidaStr + "\n" + "Quantidade de arestas do grafo: "
+					+ quantArestas + "\n";
 		}
+
+		return "";
 	}
 
-	public void grausDoVertice() {
-		System.out.println("");
-		System.out.println("c. Qual é o grau de cada vértice?");
+	public String grausDoVertice(int[][] matrizA) {
+		String retornoResposta = "";
+		String total = "";
 		if (!isGrafoDirigido) {
 			ArrayList<Integer> nDireigido = new ArrayList<>();
 			for (int i = 0; i < matrizA.length; i++) {
@@ -141,30 +135,33 @@ public class TrabalhoParcial01 {
 					totalLinha += linha[j];
 				}
 				nDireigido.add(totalLinha);
-				System.out.print("V" + (i + 1) + ": " + totalLinha + ", ");
+				total += "V" + (i + 1) + ": " + totalLinha + ", ";
 			}
 			Collections.sort(nDireigido, Collections.reverseOrder());
-			System.out.println();
+			
 			for(int i = 0; i < nDireigido.size(); i++) {
-				System.out.print(nDireigido.get(i) +  ",");
+				retornoResposta += nDireigido.get(i) +  ",";
 			}
+			return "Grau de cada vértice: " + total + "\n" + "Seguência de graus: " + retornoResposta;
 		} else if (isGrafoDirigido) {
 			for (int i = 0; i < matrizA.length; i++) {
 				int saida = 0;
 				for(int j = 0; j < matrizA[i].length; j++) {
 					saida += matrizA[i][j];
 				}
-				System.out.print("saida " + (i + 1) + ": " + saida + ", ");
+				total += "V " + (i + 1) + ": " + saida + ", ";
 			}
-			System.out.println();
 			for (int j = 0; j < matrizA[0].length; j++) {
 				int totalColuna = 0;
 				for (int i = 0; i < matrizA.length; i++) {
 					totalColuna += matrizA[i][j];
 				}
-				System.out.print("entrada " + (j + 1) + ": " + totalColuna + ", ");
+				retornoResposta += "V " + (j + 1) + ": " + totalColuna + ", ";
 			}
+			return "Grau de cada vértice: \nSaída: " + total + "\n" + "Entrada: " + retornoResposta;
 		}
 
+		return "";
 	}
+	
 }
